@@ -1,0 +1,9 @@
+.env
+node_modules/
+__pycache__/
+.venv/
+*.pyc
+.pytest_cache/
+task1-knowledge-brain/data/
+task2-inbox-agent/data/inbox.json
+task3-meeting-to-scope/data/

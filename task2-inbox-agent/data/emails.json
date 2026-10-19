@@ -1,0 +1,402 @@
+[
+ {
+  "id": "E01",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Change my site logo",
+  "body": "Hi, how do I replace the logo at the top of my directory site? I have a new PNG. - Priya",
+  "holdout": false
+ },
+ {
+  "id": "E02",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Adding membership plans",
+  "body": "Hello, I want to offer a free plan and a paid plan to members. Where do I set that up?",
+  "holdout": false
+ },
+ {
+  "id": "E03",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Edit email templates",
+  "body": "Can I change the welcome email that new members get? I want to add our phone number.",
+  "holdout": false
+ },
+ {
+  "id": "E04",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Custom domain",
+  "body": "We bought a domain from GoDaddy. How do I point our site to it?",
+  "holdout": false
+ },
+ {
+  "id": "E05",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Hide a menu item",
+  "body": "How can I remove the Blog link from the main menu?",
+  "holdout": false
+ },
+ {
+  "id": "E06",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Export my members",
+  "body": "Need a list of all members as a spreadsheet for our accountant. Is there an export?",
+  "holdout": false
+ },
+ {
+  "id": "E07",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Change colors",
+  "body": "How do I change the main color of the buttons to match our brand?",
+  "holdout": false
+ },
+ {
+  "id": "E08",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Categories for listings",
+  "body": "How do I add new categories so members can pick them when they list their business?",
+  "holdout": false
+ },
+ {
+  "id": "E09",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Approve listings manually",
+  "body": "I don't want new listings to go live automatically. Can I approve each one first?",
+  "holdout": true
+ },
+ {
+  "id": "E10",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "Add a payment gateway",
+  "body": "We want to accept cards. How do I connect Stripe to the site?",
+  "holdout": true
+ },
+ {
+  "id": "E11",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "SEO title",
+  "body": "Where can I set the page title and description for Google?",
+  "holdout": true
+ },
+ {
+  "id": "E12",
+  "category": "how_to",
+  "risk": "low",
+  "subject": "kaise karein",
+  "body": "Mujhe apni site pe naya page banana hai, about us wala. Kahan se banate hain?",
+  "holdout": true
+ },
+ {
+  "id": "E13",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Payments not going through",
+  "body": "Since yesterday members get an error when they pay for a plan. We lose sales every hour. Please help!",
+  "holdout": false
+ },
+ {
+  "id": "E14",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Emails not arriving",
+  "body": "Our members say they don't receive the confirmation email. I checked spam too.",
+  "holdout": false
+ },
+ {
+  "id": "E15",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Images won't upload",
+  "body": "When I upload a photo for a listing it spins forever and then says failed.",
+  "holdout": false
+ },
+ {
+  "id": "E16",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Search shows nothing",
+  "body": "The site search returns zero results even for businesses I can see on the site.",
+  "holdout": false
+ },
+ {
+  "id": "E17",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Login loop",
+  "body": "Members log in, then get sent back to the login page again and again.",
+  "holdout": false
+ },
+ {
+  "id": "E18",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Mobile menu broken",
+  "body": "On iPhone the menu button does nothing. Desktop is fine.",
+  "holdout": false
+ },
+ {
+  "id": "E19",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Site slow",
+  "body": "Pages take about 10 seconds to load since last week. Nothing changed on our side.",
+  "holdout": false
+ },
+ {
+  "id": "E20",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Map not showing",
+  "body": "The map on listing pages is gray and shows 'for development purposes only'.",
+  "holdout": true
+ },
+ {
+  "id": "E21",
+  "category": "troubleshooting",
+  "risk": "medium",
+  "subject": "Can't reset password",
+  "body": "I click reset password but never get the link. I need into the admin urgently.",
+  "holdout": true
+ },
+ {
+  "id": "E22",
+  "category": "troubleshooting",
+  "risk": "high",
+  "subject": "Admin hacked?",
+  "body": "Someone changed our homepage text and I did not do it. Our admin password may be leaked.",
+  "holdout": true
+ },
+ {
+  "id": "E23",
+  "category": "project_request",
+  "risk": "medium",
+  "subject": "Add booking feature",
+  "body": "Can you build a booking system so members' customers can book appointments with them?",
+  "holdout": false
+ },
+ {
+  "id": "E24",
+  "category": "project_request",
+  "risk": "medium",
+  "subject": "Custom member dashboard",
+  "body": "We want a custom dashboard showing each member their profile views and leads. Is that possible?",
+  "holdout": false
+ },
+ {
+  "id": "E25",
+  "category": "project_request",
+  "risk": "medium",
+  "subject": "Integrate with our CRM",
+  "body": "We use HubSpot. Can new member signups be pushed there automatically?",
+  "holdout": false
+ },
+ {
+  "id": "E26",
+  "category": "project_request",
+  "risk": "medium",
+  "subject": "Better search + AI",
+  "body": "Our search isn't great. We want filters and maybe some AI. Can you do it?",
+  "holdout": false
+ },
+ {
+  "id": "E27",
+  "category": "project_request",
+  "risk": "medium",
+  "subject": "Migrate from WordPress",
+  "body": "We have 2,000 listings on WordPress. Can you move them to your platform?",
+  "holdout": true
+ },
+ {
+  "id": "E28",
+  "category": "project_request",
+  "risk": "medium",
+  "subject": "Multi-language",
+  "body": "We need the site in English and Spanish. What would that involve?",
+  "holdout": true
+ },
+ {
+  "id": "E29",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "subject": "Cancel my plan",
+  "body": "Please cancel my subscription today and refund this month. We are not using it.",
+  "holdout": false
+ },
+ {
+  "id": "E30",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "subject": "Charged twice",
+  "body": "I see two charges of the same amount on my card for March. Please refund one.",
+  "holdout": false
+ },
+ {
+  "id": "E31",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "subject": "Refund after 40 days",
+  "body": "I signed up 40 days ago and forgot to cancel. Can I get my money back for the 2 months?",
+  "holdout": false
+ },
+ {
+  "id": "E32",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "subject": "Close my account",
+  "body": "Close my account and delete all my data. Also confirm no more charges.",
+  "holdout": false
+ },
+ {
+  "id": "E33",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "subject": "Downgrade",
+  "body": "I want to move to the cheaper plan from next month. Will I get a partial refund?",
+  "holdout": true
+ },
+ {
+  "id": "E34",
+  "category": "refund_cancellation",
+  "risk": "high",
+  "subject": "chargeback",
+  "body": "If you don't refund me today I will do a chargeback with my bank.",
+  "holdout": true
+ },
+ {
+  "id": "E35",
+  "category": "complaint",
+  "risk": "high",
+  "subject": "Update broke our site",
+  "body": "Your latest update broke our whole site layout. This is unacceptable. We are a paying customer for 3 years.",
+  "holdout": false
+ },
+ {
+  "id": "E36",
+  "category": "complaint",
+  "risk": "high",
+  "subject": "Support too slow",
+  "body": "I waited 5 days for an answer to a simple question. Terrible service.",
+  "holdout": false
+ },
+ {
+  "id": "E37",
+  "category": "complaint",
+  "risk": "high",
+  "subject": "Wrong information",
+  "body": "Your support told me the feature exists, I built my business around it and it does not. I'm furious.",
+  "holdout": false
+ },
+ {
+  "id": "E38",
+  "category": "complaint",
+  "risk": "high",
+  "subject": "Thinking of leaving",
+  "body": "Honestly we are considering switching to a competitor. Too many bugs lately.",
+  "holdout": false
+ },
+ {
+  "id": "E39",
+  "category": "complaint",
+  "risk": "high",
+  "subject": "Rude agent",
+  "body": "The person I chatted with yesterday was rude and dismissive.",
+  "holdout": true
+ },
+ {
+  "id": "E40",
+  "category": "complaint",
+  "risk": "high",
+  "subject": "Lost leads",
+  "body": "Your outage cost us leads for two days. What are you going to do about it?",
+  "holdout": true
+ },
+ {
+  "id": "E41",
+  "category": "quote_request",
+  "risk": "medium",
+  "subject": "Price for custom design",
+  "body": "How much would it cost to redesign our homepage?",
+  "holdout": false
+ },
+ {
+  "id": "E42",
+  "category": "quote_request",
+  "risk": "medium",
+  "subject": "Quote for 5 landing pages",
+  "body": "We need 5 landing pages in the same style. Please send a quote and timeline.",
+  "holdout": false
+ },
+ {
+  "id": "E43",
+  "category": "quote_request",
+  "risk": "medium",
+  "subject": "Enterprise pricing",
+  "body": "We have 50,000 members. Do you have a special plan and what does it cost?",
+  "holdout": false
+ },
+ {
+  "id": "E44",
+  "category": "quote_request",
+  "risk": "medium",
+  "subject": "Cost of migration",
+  "body": "What would you charge to import our old member database?",
+  "holdout": true
+ },
+ {
+  "id": "E45",
+  "category": "quote_request",
+  "risk": "medium",
+  "subject": "Hourly rate",
+  "body": "What is your hourly rate for small customisations?",
+  "holdout": true
+ },
+ {
+  "id": "E46",
+  "category": "follow_up",
+  "risk": "medium",
+  "subject": "Re: my request",
+  "body": "Hi, did you receive my request from last week about the payment error? No reply yet.",
+  "holdout": false
+ },
+ {
+  "id": "E47",
+  "category": "follow_up",
+  "risk": "medium",
+  "subject": "Any update?",
+  "body": "Following up on the quote you promised on Monday.",
+  "holdout": false
+ },
+ {
+  "id": "E48",
+  "category": "follow_up",
+  "risk": "medium",
+  "subject": "Re: Re: logo",
+  "body": "Thanks, that worked for the logo. One more question: can it also change in the footer?",
+  "holdout": false
+ },
+ {
+  "id": "E49",
+  "category": "follow_up",
+  "risk": "medium",
+  "subject": "Still not fixed",
+  "body": "You said the email problem was fixed but it is still happening.",
+  "holdout": true
+ },
+ {
+  "id": "E50",
+  "category": "follow_up",
+  "risk": "medium",
+  "subject": "Waiting",
+  "body": "Just checking you got the files I sent for the migration.",
+  "holdout": true
+ }
+]

@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Knowledge Brain</title>
+<style>body{font:16px system-ui;max-width:760px;margin:2rem auto;padding:0 1rem}input{width:75%;padding:.6rem}button{padding:.6rem 1rem}
+.card{border:1px solid #ccd;border-radius:8px;padding:1rem;margin-top:1rem}.warn{background:#fff6e0}.err{background:#fde8e8}small{color:#556}</style>
+<h1>Ask the Knowledge Brain</h1>
+<input id="q" placeholder="e.g. How do I change my site logo?"> <button onclick="ask()">Ask</button>
+<div id="out"></div><h2>Questions waiting for an expert</h2><div id="escbox"></div>
+<script>
+const h=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function ask(){const out=document.getElementById('out');out.innerHTML='<div class="card">Thinking…</div>';
+ try{const r=await fetch('/query',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({question:document.getElementById('q').value})});
+  const d=await r.json(); if(!r.ok){out.innerHTML=`<div class="card err">Knowledge service problem (${r.status}): ${h(d.detail||'')}</div>`;return}
+  if(d.status==='answered'){out.innerHTML=`<div class="card">${h(d.answer)}<hr><b>Sources</b><ul>${d.sources.map(s=>`<li><a href="${h(s.url)}" target="_blank">${h(s.title||s.url)}</a> ${s.kind==='image'?'(screenshot)':''}</li>`).join('')}</ul><small>${d.latency_ms} ms</small></div>`}
+  else{out.innerHTML=`<div class="card warn"><b>I don't have enough information to answer this.</b><br>A human expert has been asked (task #${d.escalation_id}).</div>`}
+  loadEsc()}catch(e){out.innerHTML='<div class="card err">Cannot reach the Knowledge Brain.</div>'}}
+async function loadEsc(){const r=await fetch('/escalations');if(!r.ok){document.getElementById('escbox').innerHTML='';return}const rows=await r.json();
+ document.getElementById('escbox').innerHTML=rows.map(e=>`<div class="card"><b>#${e.id}</b> ${h(e.question)}<br><input id="a${e.id}" placeholder="Approved answer"> <button onclick="resolve_(${e.id})">Approve & publish</button></div>`).join('')||'<small>None.</small>'}
+async function resolve_(id){await fetch(`/escalations/${id}/resolve`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({answer:document.getElementById('a'+id).value,approved:true,expert:'expert'})});loadEsc()}
+loadEsc();
+</script>

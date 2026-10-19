@@ -1,0 +1,26 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inbox Agent</title>
+<style>body{font:15px system-ui;margin:0;display:grid;grid-template-columns:320px 1fr;height:100vh}#list{overflow:auto;border-right:1px solid #ccd;padding:.5rem}
+#main{overflow:auto;padding:1rem 1.5rem}.item{padding:.5rem;border-bottom:1px solid #eef;cursor:pointer}.item:hover{background:#f4f6ff}.tag{font-size:12px;border-radius:4px;padding:1px 6px;background:#eef}
+.high{background:#fde0e0}.medium{background:#fff1d6}.low{background:#dff5e3}.banner{background:#fde8e8;padding:.6rem;border-radius:6px}textarea{width:100%;height:220px;font:inherit}
+button{padding:.5rem .9rem;margin:.3rem .3rem 0 0}.mail{background:#f7f7fa;padding:.7rem;border-radius:6px;white-space:pre-wrap}small{color:#556}</style>
+<div id="list"><b>New email</b><br><input id="f" placeholder="from@customer.com" style="width:95%"><input id="s" placeholder="subject" style="width:95%"><textarea id="b" placeholder="email body" style="height:90px"></textarea>
+<button onclick="add()">Process</button><div id="items"></div><hr><b>Autonomy</b> <small>(needs 20 unedited sends in a row)</small><div id="auto"></div></div>
+<div id="main">Select an email.</div>
+<script>
+let drafts=[],sel=null;const h=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const api=(u,m='GET',b)=>fetch('/api'+u,{method:m,headers:{'content-type':'application/json'},body:b?JSON.stringify(b):undefined}).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error);return d});
+async function load(){drafts=await api('/drafts');items.innerHTML=drafts.map(d=>`<div class="item" onclick="pick('${d.id}')"><b>${h(d.email.subject)}</b><br><span class="tag ${d.classification.risk}">${d.classification.category} · ${d.classification.risk}</span> <small>${d.status}${d.autoSent?' (auto)':''}</small></div>`).join('');
+ const a=await api('/autonomy');auto.innerHTML=a.categories.filter(c=>c.streak||c.enabled||c.revokedReason).map(c=>`<div><small>${c.category}: ${c.streak}/${a.required} ${c.enabled?'· AUTO ON':''}${c.revokedReason?' · revoked: '+h(c.revokedReason):''}</small> ${c.eligible?`<button onclick="tog('${c.category}',${!c.enabled})">${c.enabled?'Turn off':'Allow auto-send'}</button>`:''}</div>`).join('')||'<small>No history yet.</small>';if(sel)pick(sel)}
+function pick(id){sel=id;const d=drafts.find(x=>x.id===id);if(!d)return;const done=d.status!=='pending';
+ main.innerHTML=`<h3>${h(d.email.subject)}</h3><small>From ${h(d.email.from)}</small><div class="mail">${h(d.email.body)}</div>
+ <p><span class="tag ${d.classification.risk}">${d.classification.category} · ${d.classification.risk}${d.classification.urgent?' · URGENT':''}</span> ${h(d.classification.summary)}</p>
+ ${!d.knowledge.available?`<div class="banner"><b>Knowledge service unavailable.</b> No draft was generated. ${h(d.knowledge.error)}</div>`:`<p><b>Evidence:</b> ${d.knowledge.answer.status==='answered'?d.sourcesUsed.concat(d.knowledge.answer.sources.map(s=>s.url)).filter((v,i,a)=>a.indexOf(v)===i).map(u=>`<a href="${h(u)}" target="_blank">${h(u)}</a>`).join('<br>'):'<span class="tag medium">none found - sent to expert queue</span>'}</p>`}
+ <p><small>Next action: ${h(d.nextAction)} ${d.needsHuman?'· <b>human approval required</b>':''} · prompt ${d.promptVersion}</small></p>
+ <textarea id="r" ${done?'disabled':''}>${h(done?d.finalReply:d.reply)}</textarea><br>
+ ${done?`<p>Status: <b>${d.status}</b>${d.correctionReason?' — '+h(d.correctionReason):''}</p>`:`<input id="why" placeholder="Reason for your edit (optional)" style="width:60%"><br>
+ <button onclick="act('send')">Send (as edited)</button><button onclick="act('reject')">Reject &amp; use my text</button><button onclick="act('expert')">Needs expert</button>`}`}
+async function act(t){try{const body=t==='send'?{finalReply:r.value,reason:why.value||undefined}:t==='reject'?{replacement:r.value,reason:why.value||'rejected'}:{};await api(`/drafts/${sel}/${t}`,'POST',body);await load()}catch(e){alert(e.message)}}
+async function add(){try{const d=await api('/emails','POST',{from:f.value,subject:s.value,body:b.value});sel=d.id;await load()}catch(e){alert(e.message)}}
+async function tog(c,v){try{await api('/autonomy/'+c,'POST',{enabled:v});load()}catch(e){alert(e.message)}}
+load();
+</script>

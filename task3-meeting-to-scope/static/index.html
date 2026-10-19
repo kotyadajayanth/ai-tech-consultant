@@ -1,0 +1,26 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scope Builder</title>
+<style>body{font:15px system-ui;max-width:980px;margin:1.5rem auto;padding:0 1rem}textarea{width:100%;height:140px}pre{white-space:pre-wrap;background:#f7f7fa;padding:.8rem;border-radius:6px}
+.tag{padding:2px 8px;border-radius:4px;background:#eef}.ok{background:#dff5e3}.warn{background:#fff1d6}.err{background:#fde8e8;padding:.6rem;border-radius:6px}button{padding:.5rem .9rem;margin-right:.4rem}</style>
+<h1>Meeting → Scope of Work</h1>
+<div id="new"><input id="name" placeholder="Project name"> <input id="date" placeholder="Meeting date (2026-10-20)"><textarea id="tr" placeholder="Paste the meeting transcript here"></textarea>
+<button id="go" onclick="create()">Create scope from meeting</button> <span id="msg"></span></div>
+<h2>Projects</h2><div id="ps"></div><div id="view"></div>
+<script>
+const h=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const call=async(u,m='GET',b)=>{const r=await fetch(u,{method:m,headers:{'content-type':'application/json'},body:b?JSON.stringify(b):undefined});const d=await r.json();if(!r.ok)throw new Error(d.detail||'error');return d};
+const busy=(on,t)=>{go.disabled=on;msg.textContent=on?(t||'Working… this can take a minute'):''};
+async function create(){busy(true);try{const d=await call('/projects','POST',{name:name.value,meeting_date:date.value,transcript:tr.value});await load(d.project_id)}catch(e){msg.innerHTML='<span class="err">'+h(e.message)+'</span>';busy(false);return}busy(false)}
+async function load(open){const ps=await call('/projects');document.getElementById('ps').innerHTML=ps.map(p=>`<div><a href="#" onclick="show('${p.id}');return false"><b>${h(p.name)}</b></a> ${p.versions.map(v=>`<span class="tag ${v.status==='approved'?'ok':'warn'}">v${v.number} ${v.status}</span>`).join(' ')}</div>`).join('')||'<small>None yet.</small>';if(open)show(open)}
+async function show(id){const p=await call('/projects/'+id);const v=p.versions[p.versions.length-1];const c=v.change_report;
+ view.innerHTML=`<hr><h2>${h(p.name)} — version ${v.number} <span class="tag ${v.status==='approved'?'ok':'warn'}">${v.status}</span></h2>
+ ${c?`<div class="err" style="background:#fff6e0"><b>Changes vs approved v${c.baseline_version}</b><br>Added: ${c.added.map(x=>h(x.id+' '+x.description)).join('; ')||'none'}<br>Modified: ${c.modified.map(x=>h(x.id+' '+x.description)).join('; ')||'none'}<br>Removed: ${c.removed.map(x=>h(x.id+' '+x.description)).join('; ')||'none'}<br><b>Out of scope — quote extra:</b> ${h(c.out_of_scope_ids.join(', ')||'none')}<br>${c.facts_changed.map(f=>h(f.key+': '+f.old+' → '+f.new)).join('<br>')}</div>`:''}
+ <p><b>Hours:</b> ${v.totals.low}–${v.totals.high} (likely ${v.totals.likely}) · ${v.totals.requirements_needing_review} estimate(s) need review</p>
+ <h3>Scope of work</h3><pre>${h(v.scope_md)}</pre><h3>Proposal</h3><pre>${h(v.proposal_md)}</pre>
+ ${v.status==='draft'?`<input id="rev" placeholder="Your name"> <button onclick="appr('${id}',${v.number})">Approve this version</button> <button disabled title="Approve first">Send to client</button>`
+  :`<button onclick="snd('${id}',${v.number})" ${v.sent_at?'disabled':''}>${v.sent_at?'Sent (simulated)':'Send to client (simulated)'}</button> <small>approved by ${h(v.approved_by)}</small>
+   <h3>Add follow-up meeting</h3><input id="d2" placeholder="Date"><textarea id="t2" placeholder="Follow-up transcript"></textarea><button onclick="fu('${id}')">Process follow-up</button> <span id="m2"></span>`}`}
+async function appr(id,n){try{await call(`/projects/${id}/versions/${n}/approve`,'POST',{reviewer:rev.value});load(id)}catch(e){alert(e.message)}}
+async function snd(id,n){try{await call(`/projects/${id}/versions/${n}/send`,'POST');load(id)}catch(e){alert(e.message)}}
+async function fu(id){m2.textContent='Working…';try{await call(`/projects/${id}/meetings`,'POST',{meeting_date:d2.value,transcript:t2.value});await load(id)}catch(e){m2.innerHTML='<span class="err">'+h(e.message)+'</span>'}}
+load();
+</script>
